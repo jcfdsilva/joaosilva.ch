@@ -1,74 +1,10 @@
 import { useRef, useEffect, useState, useCallback } from "react";
+import { translations } from '../translations';
+
 
 const PIXEL_SIZE = 18;
 const REVEAL_RADIUS = 100;
 const FEATHER = 60;
-
-const hobbies = [
-  {
-    id: "climbing",
-    title: "Climbing",
-    subtitle: "Via ferrata · indoor climbing",
-    index: "01",
-    color: "#0077FF",
-    img: "climbing.jpeg",
-    tag: "ADRENALINE",
-  },
-  {
-    id: "running",
-    title: "Running",
-    subtitle: "1x Marathon finnisher and smaller distances for fun",
-    index: "02",
-    color: "#FF4D00",
-    img: "run.jpeg",
-    tag: "DISCIPLINE",
-  },
-  {
-    id: "travel",
-    title: "Travel",
-    subtitle: "Solo · Friends · Family · Meeting new people",
-    index: "03",
-    color: "#00C896",
-    img: "travel.jpeg",
-    tag: "FREEDOM",
-  },
-  {
-    id: "snowboard",
-    title: "Snowboard",
-    subtitle: "Snowboard always gets me in a good mood",
-    index: "04",
-    color: "#0077FF",
-    img: "snow.jpeg",
-    tag: "EVASION",
-  },
-  {
-    id: "wakeboard",
-    title: "Wakeboard",
-    subtitle: "Wakeboard and other watersports for fun",
-    index: "05",
-    color: "#FF4D00",
-    img: "wake.jpeg",
-    tag: "FUN",
-  },
-  {
-    id: "roadtrips",
-    title: "Road Trips",
-    subtitle: "Riding a motorcycle around",
-    index: "06",
-    color: "#FFB800",
-    img: "moto.jpeg",
-    tag: "WANDERLUST",
-  },
-  {
-    id: "motorsports",
-    title: "Motorsports",
-    subtitle: "Trying snowmobiles, rally cars, etc.",
-    index: "07",
-    color: "#0077FF",
-    img: "motorsports.jpeg",
-    tag: "FUN",
-  },
-];
 
 function drawPixelated(ctx, offscreen, canvasW, canvasH, mx, my) {
   ctx.clearRect(0, 0, canvasW, canvasH);
@@ -112,7 +48,7 @@ function drawPixelated(ctx, offscreen, canvasW, canvasH, mx, my) {
   }
 }
 
-function HobbyCard({ hobby, isDraggingRef }) {
+function HobbyCard({ language, hobby, isDraggingRef }) {
   const cardRef = useRef(null);
   const canvasRef = useRef(null);
   const offscreenRef = useRef(null);
@@ -229,7 +165,7 @@ function HobbyCard({ hobby, isDraggingRef }) {
   );
 }
 
-export function HobbiesSection() {
+export function HobbiesSection({language}) {
   const trackRef = useRef(null);
   const [scrollPct, setScrollPct] = useState(0);
   // Use a ref for isDragging so card handlers always read the latest value
@@ -300,10 +236,10 @@ export function HobbiesSection() {
 
       <div className="hobbies-header">
         <div>
-          <h1 className="hobbies-heading">Hobbies</h1>
-          <p className="hobbies-eyebrow">What I do when I'm not coding</p>
+          <h1 className="hobbies-heading">{translations[language].home.resume.hobbies_title}</h1>
+          <p className="hobbies-eyebrow">{translations[language].home.resume.hobbies_subtitle}</p>
         </div>
-        <span className="hobbies-count">{hobbies.length} passions</span>
+        <span className="hobbies-count">{translations[language].home.resume.hobbies.length} {translations[language].home.resume.hobbies_passion}</span>
       </div>
 
       <div
@@ -311,8 +247,8 @@ export function HobbiesSection() {
         className="hobbies-track"
         style={{ cursor: draggingVisual ? "grabbing" : "grab" }}
       >
-        {hobbies.map((hobby) => (
-          <HobbyCard key={hobby.id} hobby={hobby} isDraggingRef={isDraggingRef} />
+        {translations[language].home.resume.hobbies.map((hobby) => (
+          <HobbyCard language={language} key={hobby.id} hobby={hobby} isDraggingRef={isDraggingRef} />
         ))}
       </div>
 
@@ -320,7 +256,7 @@ export function HobbiesSection() {
         <div className="progress-bar-bg">
           <div className="progress-bar-fill" style={{ width: `${scrollPct * 100}%` }} />
         </div>
-        <span className="progress-hint">Drag to explore</span>
+        <span className="progress-hint">{translations[language].home.resume.hobbies_drag}</span>
       </div>
     </>
   );

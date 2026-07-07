@@ -62,7 +62,7 @@ const Experience = ({ language, scrollDirection, setScrollDirection }) => {
                 className={`resume-nav-menu ${activeMenu=="hobbies" && scrollDirection=="down" ?"active":""}`} 
                 onClick={() => setMenu('hobbies')}
                 >
-                {translations[language].home.resume.hobbies}
+                {translations[language].home.resume.hobbies_title}
                 </button>
             </div>
             <div id="experience" className={activeMenu=="experience"?"active":""}>

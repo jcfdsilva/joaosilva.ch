@@ -33,6 +33,9 @@ body, html {
 body:has(#hobbies.active){
   background: #000;
 }
+body:has(#hobbies.active) .banner .text h1 {
+  text-shadow: 4px 4px 6px #0a0a0a, 0 0 0 #000, 4px 4px 6px #717171;
+}
 body:has(#mobile-hobbies) .mobile-home{
   background: #000;
 }
@@ -1680,20 +1683,22 @@ body:has(#hobbies.active) .work-item .cover{
   .contact-shell {
     grid-template-columns: 1fr;
     row-gap: 1.75rem;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .contact-divider {
-    border-left: none;
-    border-top: 1.5px dashed var(--line);
-    width: 100%;
-    height: 1px;
+    display: none;
   }
 
   .contact-intro {
-    padding-bottom: 0;
+    display:none
   }
 
   .contact-card {
+    margin-top:100px;
+    width:90%;
     padding: 1.5rem 1.4rem 1.75rem;
   }
 
