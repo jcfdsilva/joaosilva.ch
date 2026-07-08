@@ -24,21 +24,9 @@ const Experience = ({ language, scrollDirection, setScrollDirection }) => {
         setActiveItem(activeItems);
     };
 
-    function simulatePendulum(id) {
-        const bar = document.getElementById(id);
-        const screw = bar.querySelector(".screw p");
-        const screwdiv = bar.querySelector(".screw");
-        
-        // First transformation for the p element inside .screw
-        screw.style.transform = "rotate(1440deg)";
-        
-        // Wait 1 second before applying the transform to the bar
-        setTimeout(() => {
-            screwdiv.style.opacity="0"
-            setTimeout(() => {
-                bar.style.transform = "rotateX(90deg)";
-            }, 500);
-        }, 1000);
+    function toggleWork(id) {
+        const item = document.getElementById(id);
+        item.classList.toggle("open");
     }
 
     return (
@@ -92,20 +80,25 @@ const Experience = ({ language, scrollDirection, setScrollDirection }) => {
                 </div>
                 <div id="work">
                     <h1>{translations[language].home.resume.work_subtitle}</h1>
-                    {translations[language].home.resume.work.map((item, index) => (
-                        <div className="work-container" key={"work-" + index}>
-                            <div className="work-item">
-                                <div onClick={() => simulatePendulum("cover-"+index)} id={"cover-"+index} className="cover">
-                                    <div className="screw"><p>x</p></div>
-                                    <h2>{item.job}</h2>
-                                    <p className="company">{item.company + " (" + item.start + " - " + item.end + ") "}</p>
+                    <div className="timeline">
+                        {translations[language].home.resume.work.map((item, index) => (
+                            <div className="work-item" id={"work-" + index} key={"work-" + index}>
+                                <div className="work-row" onClick={() => toggleWork("work-" + index)}>
+                                    <span className="dot" />
+                                    <div className="work-heading">
+                                        <h2>{item.job}</h2>
+                                        <p className="company">{item.company} · {item.start}–{item.end}</p>
+                                    </div>
+                                    <i className="chevron">›</i>
                                 </div>
                                 <div className="desc-wrapper">
-                                    <p className="desc">{item.descripton}</p>
+                                    <div className="desc-inner">
+                                        <p className="desc">{item.descripton}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
             <div id="hobbies" className={activeMenu=="hobbies"?"active":""}>

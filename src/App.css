@@ -42,14 +42,12 @@ body:has(#mobile-hobbies) .mobile-home{
 body:has(#mobile-hobbies) .mobile-tabbar{
   background: #262626;
 }
-body:has(#hobbies.active) .work-item .cover{
-  background: #000 !important;
-}
 
 .App {
   text-align: center;
   width: 100vw;
-  overflow-x: hidden;
+  height:100vh;
+  overflow: hidden;
   cursor: none !important;
 }
 
@@ -401,28 +399,37 @@ body:has(#hobbies.active) .work-item .cover{
   font-size: 1.9em;
 }
 
-/* ── About me ────────────────────────────────────────────── */
+ /*── About me ──────────────────────────────────────────────*/
 #aboutme {
-  height: 80vh;
-  width: 100%;
+  height: 92vh;
+  width: 90vw;
   margin-top: -80vh;
   margin-left: 95vw;
   transition: margin-left 0.5s ease;
   display: flex;
   justify-content: space-between;
+  padding-top: 10vh;
 }
 #aboutme.active  { margin-left: 0; }
 #aboutme.left    { margin-left: -95vw; }
 
 #diplomas, #work {
   color: #fff;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+}
+
+#diplomas{
+  height: 70vh;
 }
 
 #diplomas h1, #work h1 {
   font-family: var(--font-display);
   font-weight: 900;
   font-size: clamp(2rem, 4vw, 4em);
-  color: rgba(236, 178, 159, 0.55);
+  color: #c5b1ab;
   text-shadow: 4px 4px 6px var(--bg), 4px 4px 6px var(--bg);
   margin: 0;
   text-align: justify;
@@ -438,39 +445,9 @@ body:has(#hobbies.active) .work-item .cover{
   margin: 0 0 10px;
 }
 
-#diplomas, #work {
-  display: flex;
-  flex-direction: column;
-  width: 47%;
-  margin-top: 10%;
-}
-
 #diplomas p, #work p {
   text-align: justify;
   margin: 10px 0;
-}
-
-.work-item { overflow: hidden; }
-
-.work-item .cover {
-  background-color: var(--bg);
-  z-index: 1;
-  position: relative;
-  padding: 18px 0;
-  box-shadow: 7px -7px 7px rgba(0, 0, 0, 0.5);
-  transition: transform 0.5s, background-color 0.5s ease;
-}
-
-.work-item .desc-wrapper {
-  position: relative;
-  margin-top: -100px;
-  z-index: 0;
-  height: 100px;
-  overflow-y: scroll;
-  background: white;
-  color: black;
-  box-shadow: inset 3px 3px 9px rgba(0, 0, 0, 0.5);
-  padding: 0 20px;
 }
 
 #work p.company, #diplomas > div > p {
@@ -479,9 +456,6 @@ body:has(#hobbies.active) .work-item .cover{
 
 #diplomas > div::before {
   content: " ";
-}
-
-.screw, #diplomas > div::before {
   float: left;
   display: block;
   margin: 20px 14px 0 0;
@@ -495,12 +469,66 @@ body:has(#hobbies.active) .work-item .cover{
   transition: opacity 0.5s;
 }
 
-#work .screw p {
-  margin: 0 4px;
-  font-size: 16px;
-  transform-origin: 4px 9px;
-  transition: transform 1s;
+.timeline {
+  overflow-y:scroll;
+  position: relative;
+  padding-left: 26px;
 }
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.work-item { position: relative; margin-bottom: 4px; }
+
+.work-item .dot {
+  position: absolute;
+  left: -25px;
+  top: 22px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-muted);
+  transition: transform 0.3s ease;
+}
+.work-item.open .dot { transform: scale(1.3); }
+
+.work-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.chevron {
+  font-style: normal;
+  color: var(--accent-muted);
+  font-size: 20px;
+  transition: transform 0.35s ease;
+}
+.work-item.open .chevron { transform: rotate(90deg); }
+
+.desc-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.work-item.open .desc-wrapper { max-height: 140px; }
+
+.desc-inner {
+  max-height: 140px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.desc-inner .desc { padding: 4px 0 18px; color: rgba(255,255,255,0.75); } 
 
 /* ── Hobbies ─────────────────────────────────────────────── */
 #hobbies {
@@ -812,7 +840,7 @@ body:has(#hobbies.active) .work-item .cover{
 }
 
 /* ≤ 991px — tablet */ 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .liquid-background,
   .liquid-frame {
     transform: scale(0.6);
@@ -852,6 +880,8 @@ body:has(#hobbies.active) .work-item .cover{
 /* ── subtle texture ── */
 
   .cw-root{
+    height:100vh;
+    overflow-y:scroll;
     text-align: left;
   }
 

@@ -1,13 +1,26 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation} from 'react-router-dom';
 import { translations } from '../translations';
 
+const PROJECT_ROUTES = [
+    '/pinchbot',
+    '/research_blog',
+    '/citiwatts',
+    '/it_management',
+    '/prettynicky',
+    '/pinchsmall',
+  ];
+
 function Navbar({ language, setLanguage }) {
+  const location = useLocation();
+  const isProjectPage = PROJECT_ROUTES.includes(location.pathname);
+  const homeTo = isProjectPage ? '/?tab=resume' : '/';
+  
   return (
     <nav className="navbar">
       <div className="nav-links">
         <NavLink
-          to="/"
+          to={homeTo}
           className={({ isActive }) => (isActive ? 'active' : '')}
         >
           {translations[language].nav.home}

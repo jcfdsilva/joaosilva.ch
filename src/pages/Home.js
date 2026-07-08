@@ -9,7 +9,9 @@ function Home({ language }) {
         let lastScrollY = 0; // Stores the last scroll position for comparison
 
         const handleScroll = (event) => {
-            event.preventDefault(); 
+            if (event.target.closest?.(".timeline")) return; // let it scroll normally, don't hijack
+
+            event.preventDefault();
 
             const deltaY = event.deltaY || 0;
             const touchY = event.touches?.[0]?.clientY || 0;

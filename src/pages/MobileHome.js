@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { translations } from '../translations';
 import { HobbiesSection } from '../components/HobbiesSection';
 
@@ -23,11 +24,22 @@ const TABS = [
      },
 ];
 
+const VALID_TAB_IDS = TABS.map((tab) => tab.id);
+
 function MobileHome({ language }) {
-    const [activeTab, setActiveTab] = useState('profile');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const initialTab = searchParams.get('tab');
+    const [activeTab, setActiveTab] = useState(
+        VALID_TAB_IDS.includes(initialTab) ? initialTab : 'profile'
+    );
     const [openWork, setOpenWork] = useState(null);
     const navigate = useNavigate();
     const t = translations[language].home;
+
+    const handleTabChange = (tabId) => {
+        setActiveTab(tabId);
+        setSearchParams({ tab: tabId }, { replace: true });
+    };
 
     return (
         <div className="mobile-home">
@@ -118,7 +130,7 @@ function MobileHome({ language }) {
                     <button
                         key={tab.id}
                         className={`mobile-tabbar-item ${activeTab === tab.id ? "active" : ""}`}
-                        onClick={() => setActiveTab(tab.id)}
+                        onClick={() => handleTabChange(tab.id)}
                     >
                         <span className="mobile-tabbar-icon">{tab.icon}</span>
                         <span className="mobile-tabbar-label">{tab.label}</span>
